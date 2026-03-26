@@ -6,6 +6,9 @@ __pycache__/
 #Macos shit
 .DS_Store
 
+#Shush Shush
+data/
+
 
 # C extensions
 *.so
