@@ -2,8 +2,6 @@ import os
 import random
 from PIL import Image
 
-import torch
-from torchvision.io import decode_image
 from torchvision import transforms
 from torch.utils.data import Dataset
 
@@ -14,8 +12,8 @@ class CelebA(Dataset):
         self.imgs: list[str] = [f for f in sorted(os.listdir(imgs_path)) if f.endswith(".jpg")]
         self.transform = transforms.Compose([
             transforms.Resize(size=(64, 64)),
+            transforms.Grayscale(num_output_channels=1),
             transforms.ToTensor(),
-            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
         ])
     
     def __getitem__(self, index: int):
