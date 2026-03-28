@@ -12,7 +12,7 @@ class CelebA(Dataset):
         self.imgs: list[str] = [f for f in sorted(os.listdir(imgs_path)) if f.endswith(".jpg")]
         self.transform = transforms.Compose([
             transforms.Resize(size=(64, 64)),
-            transforms.Grayscale(num_output_channels=1),
+            # transforms.Grayscale(num_output_channels=1),
             transforms.ToTensor(),
         ])
     
