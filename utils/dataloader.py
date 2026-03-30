@@ -1,28 +1,34 @@
 import os
 import random
 
-import torch
-from torchvision.io import decode_image
+from PIL import Image
+import numpy as np
+
 from torch.utils.data import Dataset
+from torchvision.transforms import transforms
 
 class CelebA(Dataset):
     def __init__(self, imgs_path: str):
         super().__init__()
         self.imgs_path = imgs_path
         self.imgs: list[str] = [f for f in sorted(os.listdir(imgs_path)) if f.endswith(".jpg")]
-    
+        self.preprocess = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ])    
+
     def __getitem__(self, index: int):
         img_name: str = self.imgs[index]
         img_path: str = os.path.join(self.imgs_path, img_name)
 
         try:
-            img: torch.Tensor = decode_image(img_path)
+            img  = Image.open(img_path)
         except Exception as e:
             print(f"ERROR: Failed to load image: {self.imgs[index]}")
             new_index: int = random.randint(0, self.__len__() - 1)
             return self.__getitem__(new_index)
 
-        return img
+        return self.preprocess(img)
 
     
     def __len__(self):
