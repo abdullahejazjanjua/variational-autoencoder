@@ -23,7 +23,7 @@ class VAE(nn.Module):
         return self.decoder(z)
 
     @torch.no_grad
-    def inference(self, z: torch.Tensor):
+    def inference(self, x: torch.Tensor):
         mu, log_var = self.encoder(x)
         z = self.sampling(mu, log_var)
         return z

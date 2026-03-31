@@ -17,12 +17,10 @@ def train_one_epoch(
     total_loss = 0
     for img_idx, imgs in enumerate(dataloader):
 
-        sub_batch_size = args.batch_size // args.grad_steps
-
         optimizer.zero_grad()
         for i in range(args.grad_steps):
-            start_idx = i * sub_batch_size
-            end_idx = start_idx + sub_batch_size
+            start_idx = i * args.batch_size
+            end_idx = start_idx + args.batch_size
 
             img = imgs[start_idx:end_idx, ...].to(args.device)
             out, mu, log_var = model(img)
