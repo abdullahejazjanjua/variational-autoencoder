@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 
-from encoder import Encoder, Sampling
-from decoder import Decoder
+from .encoder import Encoder, Sampling
+from .decoder import Decoder
 
 class VAE(nn.Module):
     def __init__(self, embed_dim: int) -> None:
@@ -16,7 +16,7 @@ class VAE(nn.Module):
         z = self.sampling(mu, log_var)
         out = self.decoder(z)
 
-        return out
+        return out, mu, log_var
 
 if __name__ == "__main__":
     x = torch.randn(1, 3, 224, 224)

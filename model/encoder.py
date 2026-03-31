@@ -32,7 +32,7 @@ class Sampling(nn.Module):
         bs, embed_dim = mu.shape
         
         sigma = torch.exp(0.5 * log_var)
-        eps = torch.normal(mean=self.eps_mu, std=self.eps_sigma, size=(bs, embed_dim))
+        eps = torch.normal(mean=self.eps_mu, std=self.eps_sigma, size=(bs, embed_dim), device=mu.device)
         z = mu + sigma * eps
         
         return z.reshape(bs, embed_dim, 1, 1)
