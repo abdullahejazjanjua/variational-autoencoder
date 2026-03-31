@@ -1,3 +1,4 @@
+import os
 import time
 import argparse
 from torch.utils.data import DataLoader
@@ -7,7 +8,7 @@ from utils.dataloader import CelebA
 from utils.loss import Criterion
 from model.vae import VAE
 
-from utils.engine import train_one_epoch
+from utils.engine import train_one_epoch, evaluate_after_one_epoch
 
 def args_parser():
     parser = argparse.ArgumentParser(description="VAE parametres")
@@ -26,13 +27,13 @@ def args_parser():
     parser.add_argument("--print_freq", default=50, type=int)
     parser.add_argument("--num_workers", default=2, type=int)
     parser.add_argument("--device", default="mps", type=str)
+    parser.add_argument("--savepath", default="logs/", type=str)
 
 
     return parser
 
 
 def main(args):
-    
 
     model = VAE(args.embed_dim)
     optimizer = AdamW(params=model.parameters())
@@ -44,7 +45,6 @@ def main(args):
     print(f"Total Images: {len(dataset)}")
     print("\nUsing Arguments")
     print(args)
-    
     
     model = model.to(args.device)
     criterion = Criterion().to(args.device)        
@@ -63,7 +63,10 @@ def main(args):
         end = time.time()
         print("Average stats:")
         print(f"    loss: {loss}, time: {(end-start):.4f}s")
+        print("Evaluating:")
+        evaluate_after_one_epoch(model, savepath=args.savepath, device=args.device, num_samples=2, embed_dim=args.embed_dim, current_epoch=epoch)
 
 if __name__ == "__main__":
     args = args_parser().parse_args()
+    os.makedirs(args.savepath, exist_ok=True)
     main(args)

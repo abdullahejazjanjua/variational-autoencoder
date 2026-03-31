@@ -1,4 +1,9 @@
+import os
+
+import torch
 import torch.nn as nn
+import matplotlib.pyplot as plt
+from torchvision.utils import make_grid
 
 def train_one_epoch(
     model,
@@ -36,3 +41,16 @@ def train_one_epoch(
     return total_loss
             
 
+def evaluate_after_one_epoch(model, savepath: str, device: str, num_samples: int, embed_dim: int, current_epoch: int):
+    with torch.no_grad():
+        z = torch.randn(num_samples, embed_dim, 1, 1).to(device)
+        reconstructed_img = model.generate(z)
+
+        grid = make_grid(reconstructed_img, nrow=num_samples, padding=2, normalize=True)        
+        grid_np = grid.cpu().numpy().transpose((1, 2, 0))
+        
+        plt.figure(figsize=(15, 3))
+        plt.imshow(grid_np)
+        plt.axis('off')
+        plt.savefig(os.path.join(savepath, f"generated_img_{current_epoch}"), bbox_inches='tight')
+        plt.close()

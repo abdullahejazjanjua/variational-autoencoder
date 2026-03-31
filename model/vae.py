@@ -17,6 +17,18 @@ class VAE(nn.Module):
         out = self.decoder(z)
 
         return out, mu, log_var
+    
+    @torch.no_grad
+    def generate(self, z: torch.Tensor):
+        return self.decoder(z)
+
+    @torch.no_grad
+    def inference(self, z: torch.Tensor):
+        mu, log_var = self.encoder(x)
+        z = self.sampling(mu, log_var)
+        return z
+
+
 
 if __name__ == "__main__":
     x = torch.randn(1, 3, 224, 224)
