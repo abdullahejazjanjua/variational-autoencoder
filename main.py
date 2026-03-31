@@ -63,7 +63,7 @@ def main(args):
         end = time.time()
         print("Average stats:")
         print(f"    loss: {loss}, time: {(end-start):.4f}s")
-        print("Evaluating:")
+        print("Starting Evaluating:")
         evaluate_after_one_epoch(model, savepath=args.savepath, device=args.device, num_samples=2, embed_dim=args.embed_dim, current_epoch=epoch)
 
 if __name__ == "__main__":
