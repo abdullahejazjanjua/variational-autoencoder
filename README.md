@@ -47,6 +47,25 @@ python main.py --epochs 10 --batch_size 32 --embed_dim 256 --device mps
 | `--device` | `mps` | Device (`cpu`, `cuda`, `mps`) |
 | `--savepath` | `logs/` | Where to save generated images |
 
+## Output
+
+Generated samples after training with:
+
+```bash
+python main.py \
+--dataset_path "data/" \
+--device "cuda" --print_freq "50"
+```
+
+<p align="center">
+  <strong>Epoch 0</strong><br>
+  <img src="logs/generated_img_0.png" width="500"><br><br>
+  <strong>Epoch 1</strong><br>
+  <img src="logs/generated_img_1.png" width="500"><br><br>
+  <strong>Epoch 2</strong><br>
+  <img src="logs/generated_img_2.png" width="500">
+</p>
+
 ## Requirements
 
 - Python 3.x
