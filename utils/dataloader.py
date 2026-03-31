@@ -23,7 +23,7 @@ class CelebA(Dataset):
         try:
             img  = Image.open(img_path)
         except Exception as e:
-            print(f"ERROR: Failed to load image: {self.imgs[index]}")
+            print(f"ERROR: Failed to load image: {self.imgs[index]} with error: {e}")
             new_index: int = random.randint(0, self.__len__() - 1)
             return self.__getitem__(new_index)
 
