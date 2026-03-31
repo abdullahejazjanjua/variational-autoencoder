@@ -18,11 +18,11 @@ class VAE(nn.Module):
 
         return out, mu, log_var
     
-    @torch.no_grad
+    @torch.no_grad()
     def generate(self, z: torch.Tensor):
         return self.decoder(z)
 
-    @torch.no_grad
+    @torch.no_grad()
     def inference(self, x: torch.Tensor):
         mu, log_var = self.encoder(x)
         z = self.sampling(mu, log_var)

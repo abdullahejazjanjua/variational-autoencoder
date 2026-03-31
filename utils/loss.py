@@ -55,4 +55,4 @@ class Criterion(nn.Module):
         Maximizing this negative squared difference is mathematically identical to minimizing the 
         Mean Squared Error (MSE) between the original image x and the reconstruction x_hat.
         """
-        return nn.MSELoss(reduction="mean")(reconstructed_x, input_x)
+        return nn.MSELoss(reduction="sum")(reconstructed_x, input_x)

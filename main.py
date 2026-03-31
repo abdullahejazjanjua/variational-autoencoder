@@ -36,7 +36,7 @@ def args_parser():
 def main(args):
 
     model = VAE(args.embed_dim)
-    optimizer = AdamW(params=model.parameters())
+    optimizer = AdamW(params=model.parameters(), lr=args.lr)
     
     dataset = CelebA(imgs_path=args.dataset_path)
     dataloader = DataLoader(dataset, batch_size=(args.batch_size * args.grad_steps), shuffle=True, num_workers=args.num_workers)
