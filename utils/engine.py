@@ -12,11 +12,10 @@ def train_one_epoch(
     optimizer,
     args
     ):
-
+    model.train()
     total_len_dataset = len(dataloader)
     total_loss = 0
     for img_idx, imgs in enumerate(dataloader):
-
         optimizer.zero_grad()
         for i in range(args.grad_steps):
             start_idx = i * args.batch_size
