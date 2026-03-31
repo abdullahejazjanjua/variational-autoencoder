@@ -22,12 +22,6 @@ class Encoder(nn.Module):
         return mu, log_var
 
 
-class Decoder(nn.Module):
-    def __init__(self, embed_dim: int) -> None:
-        super().__init__()
-        pass
-
-
 class Sampling(nn.Module):
     def __init__(self, eps_mu: float = 0.0, eps_sigma: float = 1.0) -> None:
         super().__init__()
@@ -41,8 +35,8 @@ class Sampling(nn.Module):
         eps = torch.normal(mean=self.eps_mu, std=self.eps_sigma, size=(bs, embed_dim))
         z = mu + sigma * eps
         
-        return z
-    
+        return z.reshape(bs, embed_dim, 1, 1)
+
 if __name__ == "__main__":
     x = torch.randn(1, 3, 224, 224)
     encoder = Encoder(embed_dim=256)
@@ -51,4 +45,6 @@ if __name__ == "__main__":
     z = sample(mu, log_var)
     
     print(f"x: {x.shape}, (mu, log_var): ({mu.shape}, {log_var.shape}, z: {z.shape}")
+
+    print(encoder)
     

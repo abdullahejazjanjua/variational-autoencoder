@@ -13,8 +13,8 @@ class CelebA(Dataset):
         self.imgs_path = imgs_path
         self.imgs: list[str] = [f for f in sorted(os.listdir(imgs_path)) if f.endswith(".jpg")]
         self.preprocess = transforms.Compose([
+            transforms.Resize(size=(224, 224)),
             transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ])    
 
     def __getitem__(self, index: int):
