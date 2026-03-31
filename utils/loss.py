@@ -17,7 +17,7 @@ class Criterion(nn.Module):
         )
         kl_loss = self.compute_kl_loss(log_var=log_var, mu=mu)
 
-        return reconstruction_loss + kl_loss
+        return reconstruction_loss + kl_loss, reconstruction_loss, kl_loss
 
     def compute_kl_loss(self, log_var: torch.Tensor, mu: torch.Tensor):
         """

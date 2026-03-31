@@ -23,7 +23,7 @@ def train_one_epoch(
 
             img = imgs[start_idx:end_idx, ...].to(args.device)
             out, mu, log_var = model(img)
-            loss = criterion(img, out, log_var, mu)
+            loss, reconstruction_loss, kl_loss = criterion(img, out, log_var, mu)
 
             loss = loss / args.grad_steps
             total_loss += loss.item()
@@ -33,7 +33,7 @@ def train_one_epoch(
         optimizer.step()
 
         if img_idx % args.print_freq == 0 or img_idx == total_len_dataset - 1:
-            print(f"   [{img_idx}/{total_len_dataset}] loss: {total_loss / (img_idx + 1)}")
+            print(f"   [{img_idx}/{total_len_dataset}] loss: {total_loss / (img_idx + 1)} reconstruction_loss: {reconstruction_loss / (img_idx + 1)} kl_loss: {kl_loss / (img_idx + 1)}")
 
     return total_loss
             
