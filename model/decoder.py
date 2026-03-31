@@ -7,7 +7,7 @@ class Decoder(nn.Module):
     def __init__(self, embed_dim: int) -> None:
         super().__init__()
         self.initial_block = nn.Sequential(
-                nn.ConvTranspose2d(in_channels=embed_dim, out_channels=embed_dim, kernel_size=7),
+                nn.ConvTranspose2d(in_channels=embed_dim, out_channels=embed_dim, kernel_size=4),
                 nn.BatchNorm2d(num_features=embed_dim),
                 nn.ReLU(inplace=True)
             )

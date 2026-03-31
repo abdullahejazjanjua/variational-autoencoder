@@ -22,7 +22,7 @@ def args_parser():
     parser.add_argument("--epochs", default=3, type=int)
     parser.add_argument("--lr", default=0.0005, type=float, help="Base learning rate")
     parser.add_argument("--embed_dim", default=256, type=int, help="latent dimension of z")
-    parser.add_argument("--grad_clip", default=3.0, type=float)
+    parser.add_argument("--grad_clip", default=1.0, type=float)
 
     # Additional parametres
     parser.add_argument("--print_freq", default=50, type=int)

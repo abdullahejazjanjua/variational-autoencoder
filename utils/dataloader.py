@@ -2,7 +2,6 @@ import os
 import random
 
 from PIL import Image
-import numpy as np
 
 from torch.utils.data import Dataset
 from torchvision.transforms import transforms
@@ -13,7 +12,7 @@ class CelebA(Dataset):
         self.imgs_path = imgs_path
         self.imgs: list[str] = [f for f in sorted(os.listdir(imgs_path)) if f.endswith(".jpg")]
         self.preprocess = transforms.Compose([
-            transforms.Resize(size=(224, 224)),
+            transforms.Resize(size=(128, 128)),
             transforms.ToTensor(),
         ])    
 

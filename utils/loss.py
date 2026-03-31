@@ -29,7 +29,7 @@ class Criterion(nn.Module):
         dimension J is:
         D_KL = -0.5 * Sum_{j=1 to J} (1 + log(sigma_j^2) - mu_j^2 - sigma_j^2)
         """
-        return -0.5 * torch.sum(1 + log_var - mu**2 - torch.exp(log_var))
+        return torch.mean(-0.5 * torch.sum(1 + log_var - mu**2 - torch.exp(log_var), dim=1))
 
     def compute_reconstruction_loss(
         self, input_x: torch.Tensor, reconstructed_x: torch.Tensor
@@ -55,4 +55,4 @@ class Criterion(nn.Module):
         Maximizing this negative squared difference is mathematically identical to minimizing the 
         Mean Squared Error (MSE) between the original image x and the reconstruction x_hat.
         """
-        return nn.MSELoss(reduction="sum")(reconstructed_x, input_x)
+        return nn.MSELoss(reduction="mean")(reconstructed_x, input_x)
