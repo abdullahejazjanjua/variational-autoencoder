@@ -1,7 +1,8 @@
 import os
 import time
 import argparse
-from torch.utils.data import DataLoader
+import numpy as np
+from torch.utils.data import DataLoader, Subset
 from torch.optim import AdamW
 
 from utils.dataloader import CelebA
@@ -28,6 +29,7 @@ def args_parser():
     parser.add_argument("--num_workers", default=2, type=int)
     parser.add_argument("--device", default="mps", type=str)
     parser.add_argument("--savepath", default="logs/", type=str)
+    parser.add_argument("--dataset_num_subset", default=50000, type=int, help="if you want to train on a subset of total images only")
 
 
     return parser
@@ -38,7 +40,10 @@ def main(args):
     model = VAE(args.embed_dim)
     optimizer = AdamW(params=model.parameters(), lr=args.lr)
     
-    dataset = CelebA(imgs_path=args.dataset_path)
+    full_dataset = CelebA(imgs_path=args.dataset_path)
+    indices = np.arange(args.dataset_num_subset)
+    dataset = Subset(full_dataset, indices)
+
     dataloader = DataLoader(dataset, batch_size=(args.batch_size * args.grad_steps), shuffle=True, num_workers=args.num_workers)
     
     print(f"Using device: {args.device}")
