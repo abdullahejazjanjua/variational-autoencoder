@@ -43,9 +43,10 @@ python main.py --epochs 10 --batch_size 32 --embed_dim 256 --device mps
 | `--epochs` | `3` | Number of epochs |
 | `--lr` | `0.0005` | Learning rate |
 | `--embed_dim` | `256` | Latent space dimension |
-| `--grad_clip` | `3.0` | Gradient clipping max norm |
+| `--grad_clip` | `1.0` | Gradient clipping max norm |
 | `--device` | `mps` | Device (`cpu`, `cuda`, `mps`) |
 | `--savepath` | `logs/` | Where to save generated images |
+| `--dataset_num_subset` | `50000` | You can set this value, if you want to train on subset of the data. Set to -1 to use the entire dataset.|
 
 ## Output
 
@@ -66,15 +67,7 @@ python main.py \
   <img src="logs/generated_img_2.png" width="500">
 </p>
 
-## Requirements
+> This code is meant as learning experience to understand how VAEs actually work, as such there are detailed comments in some places. I don't have the resources to train the model completely, so I have to trained upto 3 epochs as a proof of concept. Feel free to use this code as you see fit.
 
-- Python 3.x
-- PyTorch
-- torchvision
-- matplotlib
-- Pillow
-- numpy
-
-## License
-
+# LICENSE
 MIT

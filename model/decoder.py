@@ -4,6 +4,23 @@ import torch
 import torch.nn as nn
 
 class Decoder(nn.Module):
+    """
+    In my notes, the decoder is defined as an explicit gaussian that uses two NNs to get mean and variance
+    While implementating, we have a single network that directly gives back the image.
+
+    1. The Probabilistic Requirement
+    To train a VAE, you must optimize the Evidence Lower Bound (ELBO). The reconstruction term in the ELBO 
+    requires computing the log-likelihood of the data given the latent variables: log p(x|z). To compute a 
+    log-likelihood, p(x|z) must be a formal probability distribution. For continuous image data, a Gaussian 
+    distribution is the standard choice: p(x|z) = N(mu(z), sigma(z)).
+
+    2. The Implementation Shortcut (Fixing the Variance)
+    In practice, it is common to simplify this model by assuming the variance is a fixed constant across all 
+    pixels, typically the identity matrix I. Because the variance is fixed, you do not need a second neural 
+    network to compute it. The single decoder neural network only needs to compute the mean, mu(z). Therefore, 
+    when your code "gives back the image," the neural network is actually outputting the mean of the 
+    Gaussian.
+    """
     def __init__(self, embed_dim: int) -> None:
         super().__init__()
         self.initial_block = nn.Sequential(
